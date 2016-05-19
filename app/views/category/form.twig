@@ -1,0 +1,29 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+
+<form action="/category/form/{{id}}" method="post" autocomplete="off">
+<div class="well">
+	<div class="row">
+	<div class="col-md-12">
+		<label for="nombre">Nombre</label>
+		<input type="text" name="nombre" class="form-control input-lg" id="nombre" placeholder="Introduce nombre" value="{% if request.post('name') %}{{ name }}{% else %}{{ category.name }}{% endif %}">
+		{% if errors.has('nombre') %}{{ errors.first('nombre')}}{% endif %}
+		<p></p>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-md-12">
+		{% if category.id %}
+				<button id="save" class="btn btn-warning btn-lg btn-block"><i class="fa fa-floppy-o fa-2x"> Actualizar</i></button>
+			{% else %}
+				<button id="save" class="btn btn-success btn-lg btn-block"><i class="fa fa-floppy-o fa-2x"> Guardar</i></button>
+			{% endif %}
+	</div>
+	</div>
+</div>
+</form>
+
+{% endblock %}

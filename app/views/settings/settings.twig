@@ -1,0 +1,159 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+
+
+<div class="well">
+
+	<form action="{{ urlFor('settings-post') }}" method="post" class="form-horizontal" autocomplete="off">
+
+    <legend>Generales</legend>
+
+		<div class='form-group'>
+			<label for="rfc" class='col-sm-2 control-label'>RFC</label>
+				<div class='col-sm-2'>
+	               <h4>{{ company.tax_id}}</h4>
+    			</div>
+
+        	<label class="col-sm-2 control-label" for="">Nombre Comercial</label>
+            	<div class="col-sm-6">
+            		<input type="text" name="company_name" value="{{ company.company_name}}" class="form-control">
+            	</div>
+		</div>
+    	<div class='form-group'>
+    		<label for="" class='col-sm-2 control-label'>Nombre fiscal</label>
+    		<div class='col-sm-10'>
+    			<input type="text" class="form-control" name="nombre_fiscal" value="{{ company.name }}">
+    		</div>
+    	</div>
+
+    	<div class='form-group'>
+    		<label for="" class='col-sm-2 control-label'>Regimen Fiscal</label>
+    		<div class='col-sm-10'>
+    			<input type="text" class="form-control" name="regimenfiscal" value="{{ company.regimen_fiscal }}">
+                {% if errors.has('regimenfiscal') %}<p class="text-danger">{{ errors.first('regimenfiscal')}}</p>{% endif %}
+    		</div>
+    	</div>
+
+	<legend>Direccion</legend>
+
+		<div class="form-group">
+            <label class="col-sm-2 control-label" for="">Calle</label>
+            <div class="col-sm-10">
+            	<input type="text" class="form-control" name="direccion" value="{{ company.address}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="noExterior">Num Ext</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="noExterior" value="{{ company.noExterior}}">
+           	</div>
+
+            <label class="col-sm-2 control-label" for="noInterior">Num Int</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="noInterior" value="{{ company.noInterior}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="noExterior">Colonia</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="colonia" value="{{ company.colonia}}">
+           	</div>
+
+            <label class="col-sm-2 control-label" for="noInterior">Codigo Postal</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="zip" value="{{ company.zip}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="noExterior">Ciudad</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="ciudad" value="{{ company.city}}">
+           	</div>
+
+            <label class="col-sm-2 control-label" for="noInterior">Estado</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="estado" value="{{ company.state}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="noExterior">Pais</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="pais" value="{{ company.country}}">
+           	</div>
+        </div>
+
+        <legend>Datos Contacto</legend>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="client_email_address">Correo</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="correo" value="{{ company.email_address}}">
+            </div>
+
+            <label class="col-sm-2 control-label" for="client_phone_number">Telefono</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="telefono" value="{{ company.phone_number}}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="client_mobile_number">Tel Celular</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="celular" value="{{ company.mobile_number}}">
+            </div> 
+            <label class="col-sm-2 control-label" for="client_fax_number">Fax</label>
+            <div class="col-sm-4">
+				<input type="text" class="form-control" name="fax" value="{{ company.fax_number}}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="client_web_address">Direccion web</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="web" value="{{ company.web_address}}">
+            </div>
+          </div>
+
+          <legend>Miscelaneos</legend>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="client_banco">CURP</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="curp" value="{{ company.curp}}">
+            </div>
+
+            <label class="col-sm-2 control-label" for="client_cuenta_bancaria">Cedula profesional</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="cedprof" value="{{ company.cedprof}}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="client_iva_ret">Codigo de identificacion forestal</label>
+            <div class="col-sm-4">
+            	<input type="text" class="form-control" name="CIForestal" value="{{ company.CIForestal}}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+              <div class="pull-right">
+                <a href="" class="btn btn-default">Cancelar</a>
+                <button type="submit" class="btn btn-primary" id="save" ng-disabled="client_form.$invalid" >Guardar</button>
+              </div>
+            </div>
+          </div>
+
+
+
+	</form>
+</div>
+
+{% endblock %}

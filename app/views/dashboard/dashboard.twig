@@ -1,0 +1,27 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+
+	inicio mostrar graficas y datos
+	<div>
+		<h5>Gastos del Mes</h5>
+		$ {{ expense_this_month }}
+	</div>
+
+	<div>
+		<h5>Categoria mas gasto</h5>
+		{{ category_first }}
+	</div>
+
+	<div>
+		<h5>Gastos del year</h5>
+		$ {{ expense_this_year }}
+	</div>
+	<p></p>
+	<a href="{{ urlFor('category-add')}}" title="">Add category</a>
+	<p></p>
+	<a href="{{ urlFor('expenses-add') }}">Agreagar Gasto</a>
+
+{% endblock %}

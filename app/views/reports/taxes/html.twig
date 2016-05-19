@@ -1,0 +1,25 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+
+	<table class="table">
+		<caption>Reporte de impuestos del al </caption>
+		<thead>
+			<tr>
+				<th>Impuesto</th>
+				<th>Monto</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for tax in taxes %}
+			<tr>
+				<td>{{ tax.tax_rates.tax_name }}</td>
+				<td>{{ tax.tax_amount }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

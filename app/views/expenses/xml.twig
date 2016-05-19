@@ -1,0 +1,99 @@
+{% extends 'templates/default.php' %}
+{% block title %} Upload {% endblock %}
+{% block content %}
+
+<div class="panel panel-default">
+	  <div class="panel-heading">
+			<h3>{{ expense.supplier.supplier_name }}<small class="pull-right"> {{ expense.expense_uuid }}</small></h3>
+	  </div>
+
+	  <div class="col-md-12 bg-primary text-right">
+	  	<p></p>
+	  	<ul class="list-inline">
+	  		<li><small>Folio:</small> {{ expense.expense_folio }}</li>
+	  		<li><small>Serie:</small> {{ expense.expense_serie }}</li>
+	  		<li><small>Forma de pago:</small> {{ expense.expense_formaDePago }}</li>
+	  		<li><small>Metodo de pago:</small> {{ expense.expense_metodoDePago }}</li>
+	  		<li><small>Num cta:</small> {{ expense.expense_NumCtaPago }}</li>
+	  		<li><small>Moneda:</small> {{ expense.expense_moneda }}</li>
+	  	</ul>
+
+	  </div>
+
+	  <table class="table table-bordered table-responsive">
+	  	<thead>
+	  		<tr>
+	  			<th>Cant</th>
+	  			<th>Unidad</th>
+	  			<th>Codigo</th>
+	  			<th>Descripcion</th>
+	  			<th>Precio</th>
+	  			<th>Importe</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  		
+	  		{% for item in expense.items %}
+	  			<tr>
+	  			<td>{{ item.item_qty}}</td>
+	  			<td>{{ item.item_unidad}}</td>
+	  			<td>{{ item.item_name}}</td>
+	  			<td>{{ item.item_description}}</td>
+	  			<td align="right">{{ item.item_price|number_format(2, '.', ',')}}</td>
+	  			<td align="right">{{ (item.item_qty * item.item_price)|number_format(2, '.', ',') }}</td>
+	  		</tr>
+
+	  		{% endfor %}
+	  		<tr>
+				<td colspan="4"></td>
+				<td colspan="1" align="right"><strong>Subtotal</strong></td>
+				<td colspan="1" align="right">{{ expense.expense_subtotal}}</td>
+			</tr>
+			{% if expense.expense_descuento > 0 %}
+			<tr>
+				<td colspan="4"></td>
+				<td colspan="1" align="right"><strong>Descuento</strong></td>
+				<td colspan="1" align="right">{{ expense.expense_descuento}}</td>
+			</tr>
+			{% endif %}
+			{% for tax in expense.taxes %}
+			<tr>
+				<td colspan="4"></td>
+				<td colspan="1" align="right"><strong>{{ tax.tax_rates.tax_name}}</strong></td>
+				<td colspan="1" align="right">{{ tax.tax_amount}}</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td colspan="4"></td>
+				<td colspan="1" align="right"><strong>Total</strong></td>
+				<td colspan="1" align="right">{{ expense.expense_amount}}</td>
+			</tr>
+	  	</tbody>
+	  </table>
+
+	<div class="panel-body">
+
+	 	<ul class="list-inline">
+	 		<li><small>Fecha y Hora de Certificacion:</small> {{ expense.expense_date_entered }}</li>
+	  		<li><small>Lugar expedicion:</small> {{ expense.expense_LugarExpedicion }}</li>
+	  	</ul>
+	</div>
+	<div class="panel-footer">
+	  	<ul class="list-inline">
+	  		<li><small>Numero de serie CSD del SAT:</small>111111111111111</li>
+	  		<li><small>Numero de serie CSD del emisor:</small> {{ expense.expense_noCertificado }}</li>
+	  	</ul>
+	</div>
+
+</div>
+	<div class="well text-right">
+
+			<a href="{{ urlFor('expenses-view-xml', {'uuid': expense.expense_uuid})}}" target="_blank" class="btn btn-primary btn-lg"><i class="fa fa-file-code-o fa-2x"></i> XML</a>
+			<a href="{{ urlFor('expenses-download-xml', {'uuid': expense.expense_uuid})}}" class="btn btn-primary btn-lg"><i class="fa fa-file-code-o fa-2x"></i> Descargar XML</a>
+			<a href="{{ urlFor('expenses-view-pdf', {'uuid': expense.expense_uuid})}}" target="_blank" class="btn btn-danger btn-lg"><i class="fa fa-file-pdf-o fa-2x"></i> PDF</a>
+			<a href="{{ urlFor('expenses-download-pdf', {'uuid': expense.expense_uuid})}}" class="btn btn-danger btn-lg"><i class="fa fa-file-pdf-o fa-2x"></i> Descargar PDF</a>
+
+
+	</div>
+
+{% endblock %}

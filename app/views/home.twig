@@ -1,0 +1,39 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+	<div class="panel panel-default">
+		  <div class="panel-heading">
+				<h3 class="panel-title text-center">Gastos del Mes</h3>
+		  </div>
+		  <div class="panel-body text-center">
+				<h1>$ {{ expense_this_month }}</h1>
+		  </div>
+	</div>
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">
+			<h3 class="panel-title text-center">Top 5</h3>
+		</div>	
+			<!-- Table -->
+			<table class="table table-bordered table-striped">
+				<tbody>
+					{% for category in category_first %}
+					<tr>
+						<td>{{ category.name }}</td>
+						<td>$ <strong>{{ category.suma|number_format(2, '.', ',') }}</strong></td>
+					</tr>
+    				{% endfor %}
+				</tbody>
+			</table>
+	</div>
+	<div class="panel panel-default">
+		  <div class="panel-heading">
+				<h3 class="panel-title text-center">Gastos del Year</h3>
+		  </div>
+		  <div class="panel-body text-center">
+				<h1>$ {{ expense_this_year }}</h1>
+		  </div>
+	</div>
+{% endblock %}

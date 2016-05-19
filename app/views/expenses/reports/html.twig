@@ -1,0 +1,51 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Expense Report {% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Reporte Gastos</div>
+		<div class="panel-body">
+			<table class="table">
+				<caption>Gastos del {{ request.post('fromDate') }} al {{ request.post('toDate') }}</caption>
+				<thead>
+					<tr>
+						<th>Fecha</th>
+						<th class="hidden-xs">Descripcion</th>
+						<th class="text-right">Monto</th>
+						<th></th>
+						{% if auth.isAdmin %}
+						<th class="hidden-xs">Usuario</th>
+						{% endif %}
+					</tr>
+				</thead>
+				<tbody>
+					{% set sum = 0 %}
+					{% for expense in expenses %}
+					{% set sum = sum + expense.expense_amount %}
+					<tr>
+						<td>{{ expense.expense_date_entered|date('d/m/Y') }}</td>
+						<td class="hidden-xs">{{ expense.expense_description }}</td>
+						<td class="text-right">{{ expense.expense_amount|number_format(2, '.', ',') }}
+						</td>
+						<td class="text-center">{% if expense.expense_uuid %}<a href="{{ urlFor('expenses-view-xml', {'uuid': expense.expense_uuid})}}" title="" target="_blank" class="btn btn-info btn-sm">XML </a><a href="" title="" class="btn btn-danger btn-sm">PDF</a>{% endif %}</td>
+						{% if auth.isAdmin %}
+						<td class="hidden-xs">{{ expense.user.username }}</td>
+						{% endif %}
+					</tr>
+					{% endfor %}
+					<tr>
+						<td></td>
+						<td class="hidden-xs"></td>
+						<td class="text-right"><strong>Total:</strong> {{ sum|number_format(2, '.', ',') }}</td>
+						<td></td>
+						{% if auth.isAdmin %}
+						<td class="hidden-xs"></td>
+						{% endif %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+{% endblock %}

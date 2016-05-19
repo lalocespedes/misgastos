@@ -1,0 +1,46 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Upload {% endblock %}
+
+{% block content %}
+	
+	<form action="{{ urlFor('expenses-upload-post') }}" method="post" id="forma1" enctype="multipart/form-data">
+	<div class="well col-md-6 col-md-offset-3">
+	<div class="col-md-12">
+		<div class="form-group">
+		<label><strong>Selecciona una categoria</strong></label>
+		<select name="category" class="form-control input-lg">
+			{% for category in categories %}
+		    <option value="{{ category.id }}" {% if expense.category.id == category.id %}selected{% endif %} {% if request.post('category') == category.id %}selected{% endif %}>{{ category.name }}</option>
+			{% endfor %}
+		</select>
+		</div>
+	</div>
+	<hr>
+	<div class="col-md-12">
+		<hr>
+		<div class="form-group">
+		<label for="exampleInputFile"><strong>Seleccionar XML</strong></label>
+    		<input class="form-group" name="file" type="file" id="file"/> 
+    		<p class="help-block">Selecciona el archvio xml.</p> 	
+    	</div>  	
+    </div>
+
+    <div class="errors text-danger">
+    {% if errors %}
+
+		{% for error in errors %}
+		    
+			{{ error }}
+
+		{% endfor %}
+
+	{% endif %}
+    </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+    	<button type="submit" value="Enviar" class="btn btn-success btn-lg btn-block"><i class="fa fa-cloud-upload fa-2x"> Subir</i></button>	
+    </div>
+	</form>
+
+{% endblock %}

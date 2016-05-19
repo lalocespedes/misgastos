@@ -1,0 +1,62 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+	<form action="/expenses/form/{{id}}" method="post" autocomplete="off">
+		<fieldset>
+		<div class="well">
+		<div class="row ">
+			<div class="col-md-12">
+			<div class="form-group {% if errors.has('amount') %}text-danger{% endif %}">
+				<label><strong>Monto</strong></label>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1"><i class="fa fa-usd fa-2x"></i></span>
+					<input type="text" name="amount" class="form-control input-lg required" value="{% if request.post('amount') %}{{request.post('amount')}}{% else %}{{expense.expense_amount}}{% endif %}">
+				</div>
+				{% if errors.has('amount') %}{{ errors.first('amount')}}{% endif %}
+			</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+				<label><strong>Selecciona una categoria</strong></label>
+				<select name="category" class="form-control input-lg">
+					{% for category in categories %}
+				    <option value="{{ category.id }}" {% if expense.category.id == category.id %}selected{% endif %} {% if request.post('category') == category.id %}selected{% endif %}>{{ category.name }}</option>
+					{% endfor %}
+				</select>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group {% if errors.has('date') %}text-danger{% endif %}">
+				<label for=""><strong>Fecha</strong></label>
+				<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar fa-2x"></i></span>
+					<input type="text" name="date" class="form-control input-lg date-picker" placeholder="AAAA-MM-DD" value="{% if request.post('date') %}{{request.post('date')}}{% else %}{{expense.expense_date_entered|date("Y/m/d")}}{% endif %}">
+				</div>
+				{% if errors.has('date') %}<div class="text-danger">{{ errors.first('date')}}</div>{% endif %}
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+				<label><strong>Description</strong></label>
+					<textarea name="description" class="form-control input-lg">{% if request.post('description') %}{{request.post('description')}}{% else %}{{expense.expense_description}}{% endif %}</textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+			{% if expense.id %}
+				<button id="save" class="btn btn-warning btn-lg btn-block"><i class="fa fa-floppy-o fa-2x"> Actualizar</i></button>
+			{% else %}
+				<button id="save" class="btn btn-success btn-lg btn-block"><i class="fa fa-floppy-o fa-2x"> Guardar</i></button>
+			{% endif %}
+			</div>
+		</div>
+		</div>
+		</fieldset>
+	</form>
+
+{% endblock %}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="">
+	<style type="text/css">
+	.columna-sellos-derecha{
+	font-size: 5px;
+    float:left;
+    width:600px;
+    }
+    
+	.columna-sellos-izquierda{
+	font-size:x-small;
+    text-align:left;
+    margin-right:5px;
+    padding-right:4px;
+    float:left;
+    width:150px;
+    }
+	</style>
+</head>
+<body>
+
+	<div style="font-size:12px; font-weight: bold; text-align: center;">{{ emisor.nombre }}</div>
+	<table>
+		<tbody>
+			<tr>
+				<td width="50%">
+					<p><b>RFC Emisor:</b> {{ emisor.rfc }}</p>
+					<p><b>Domicilio Fiscal Emisor</b></p>
+					<p> {{ emisor_domicilio.calle }}
+						{{ emisor_domicilio.noExterior }}
+						{{ emisor_domicilio.noInterior }}
+						{{ emisor_domicilio.colonia }}
+						{{ emisor_domicilio.localidad }}
+						{{ emisor_domicilio.municipio }}
+						{{ emisor_domicilio.estado }}
+						{{ emisor_domicilio.pais }}
+						{{ emisor_domicilio.codigoPostal }}
+					</p>
+					<p><b></b>Sucursal:</p>
+					<br>
+					<p>{{ receptor.rfc }}</p>
+					<p>{{ receptor.nombre }}</p>
+					<p>
+						{{ receptor_domicilio.calle }}
+						{{ receptor_domicilio.noExterior }}
+						{{ receptor_domicilio.noInterior }}
+						{{ receptor_domicilio.colonia }}
+						{{ receptor_domicilio.localidad }}
+						{{ receptor_domicilio.municipio }}
+						{{ receptor_domicilio.estado }}
+						{{ receptor_domicilio.pais }}
+						{{ receptor_domicilio.codigoPostal }}
+					</p>
+				</td>
+				<td width="50%">
+					<p><b>Folio Fiscal:</b> {{ uuid }}</p>
+					<p><b>No de Serie del CSD:</b> {{ documento.noCertificado }}</p>
+					<p><b>Lugar, Fecha y hora de emision:</b></p>
+					<p>{{ documento.LugarExpedicion }} {{ documento.fecha }}</p>
+					<p><b>Efecto del comprobante:</b> {{ documento.TipoDeComprobante }}</p>
+					<p><b>Folio y Serie:</b> {{ documento.folio }}  {{ documento.serie }}
+					<p><b>Regimen Fiscal:</b> {{ regimenfiscal }}</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<!-- 	<?php //echo (empty($invoice->Expcalle)) ? '' : $invoice->Expcalle; ?>
+	<?php //echo (empty($invoice->ExpnoExterior)) ? '' : $invoice->ExpnoExterior; ?>
+	<?php //echo (empty($invoice->ExpnoInterior)) ? '' : $invoice->ExpnoInterior; ?>
+	<?php //echo (empty($invoice->Expcolonia)) ? '' : $invoice->Expcolonia; ?>
+	<?php //echo (empty($invoice->Expmunicipio)) ? '' : $invoice->Expmunicipio; ?>
+	<?php //echo (empty($invoice->Expestado)) ? '' : $invoice->Expestado; ?>
+	<?php //echo (empty($invoice->Exppais)) ? '' : $invoice->Exppais; ?>
+	<?php //echo (empty($invoice->ExpcodigoPostal)) ? '' : $invoice->ExpcodigoPostal; ?> -->
+	<br>
+	<table autosize:"1" cellpadding="3" cellspacing="3">
+        <tbody>
+          <tr style="border:1px solid black; font-size:10px;">
+				<th style="border:1px solid black; font-size:10px;">
+					Cantidad
+				</th>
+				<th style="border:1px solid black; font-size:10px;">
+					Unidad de Medida
+				</th>
+				<th style="border:1px solid black; font-size:10px;">
+					NUMERO DE IDENTIFICACION
+				</th>
+				<th style="border:1px solid black; font-size:10px;">
+					DESCRIPCION
+				</th>
+				<th style="border:1px solid black; font-size:10px;" align="center">
+					PRECIO UNITARIO
+				</th>
+				<th style="border:1px solid black; font-size:10px;" align="center">
+					IMPORTE
+				</th>
+			</tr>
+
+			{% for concepto in conceptos %}
+			    <tr style="border:1px solid black;">
+			    	<td align="center" style="border:1px solid black;">{{ concepto.cantidad }}</td>
+			    	<td align="center" style="border:1px solid black;">{{ concepto.unidad }}</td>
+			    	<td align="center" style="border:1px solid black;">{{ concepto.noIdentificacion }}</td>
+			    	<td align="center" style="border:1px solid black;">{{ concepto.descripcion }}</td>
+			    	<td align="center" style="border:1px solid black;">{{ concepto.valorUnitario }}</td>
+			    	<td align="center" style="border:1px solid black;">{{ concepto.importe }}</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<td colspan="4" rowspan="6" style="border:0px solid black;">
+					<br>
+					<p><b>Motivo del Descuento</b></p>
+					<p><b>Moneda:</b> {{ documento.moneda }} <b>Tipo de cambio:</b> {{ documento.TipoCambio }}</p>
+					<p><b>Forma de Pago:</b> {{ documento.formaDePago }}</p>
+					<p><b>Metodo de Pago:</b> {{ documento.metodoDePago }}</p>
+					<p><b>Numero de cuenta de Pago:</b> {{ documento.NumCtaPago }}</p>
+					<p><b>Condiciones de Pago:</b> {{ documento.condicionesDePago }}</p>
+				</td>
+				<td align="right" style="border:1px solid black;"><b>Subtotal</b></td>
+				<td align="right" style="border:1px solid black;">{{ documento.subtotal }}</td>
+			</tr>
+			{% for traslado in impuestos.traslado %}
+			    		
+			<tr>
+				<td align="right" style="border:1px solid black;">{{ traslado.impuesto}}</td>
+				<td align="right" style="border:1px solid black;">{{ traslado.importe}}</td>
+			</tr>
+
+			{% endfor %}
+			{% for retencion in impuestos.retencion %}
+			    		
+			<tr>
+				<td align="right" style="border:1px solid black;">RET {{ retencion.impuesto}}</td>
+				<td align="right" style="border:1px solid black;">{{ retencion.importe}}</td>
+			</tr>
+
+			{% endfor %}
+<!-- 			if descuento
+			<tr>
+				<td align="right" style="border:1px solid black;"><b>discount</b></td>
+				<td align="right" style="border:1px solid black;">descuento</td>
+			</tr> -->
+			<tr>
+				<td align="right" style="border:1px solid black;"><b>Total</b></td>
+				<td align="right" style="border:1px solid black;">{{ documento.total }}</td>
+			</tr>
+          </tbody>
+		</table>
+	<br>
+	<div>
+		<b>Importe con letra:</b>
+		<div>{{ importe_letra }}</div>
+	</div>
+	<br>
+	<div style="font-size:10px;">
+		<div><b>Sello digital del CFDI</b></div>
+		{{ selloCFD }}
+	</div>
+	<br>
+	<div style="font-size:10px;">
+		<div><b>Sello del SAT</b></div>
+		{{ selloSAT }}
+	</div>
+	<br>
+	<div>
+	<div class="columna-sellos-izquierda">
+		<img style="float: left; padding: 0 0 15px 15px; opacity: 1; background: #fff; margin: 0 0 10px 10;" src="data:image/png;base64, {{ qr }}">		
+	</div>
+	<div class="columna-sellos-derecha">
+	<div style="font-size:10px;"><b>Cadena Original del complemento de certificaion digital del SAT</b></div>
+	<div style="font-size:10px;">{{ cadenaOriginalTFD }}</div>
+	<div style="font-size:10px;"><b>No de Serie del Certificado del SAT:</b> {{ noCertificadoSAT }}</div>
+	<div style="font-size:10px;"><b>Fecha y hora de certificacion:</b>	{{ FechaTimbrado }}</div>
+	<div style="font-size:10px;">Este documento es una representacion impresa de un CFDI</div>
+	</div>
+	</div>
+</body>
+</html>

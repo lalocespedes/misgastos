@@ -1,0 +1,9 @@
+{% if flash is not empty %}
+	{% for key, msg in flash %}
+		<div class="{{ key }} alert alert-{{ key }} alert-fixed">
+		<a class="close" data-dismiss="alert" href="#">&times;</a>
+			<h4>{{ key }}!</h4>
+	    	<p>{{ msg }}</p>
+		</div>
+	{% endfor %}
+{% endif %}

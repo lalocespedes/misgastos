@@ -1,0 +1,46 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+
+<div class="col-md-10 col-md-offset-1">
+
+		<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">
+			<h3 class="panel-title">Gastos</h3>
+		</div>	
+			<!-- Table -->
+			<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Descripcion</th>
+					<th>Monto</th>
+					<th>Categoria</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>		
+
+			{% for expense in expenses %}
+				<tr>
+					<td>{{ expense.expense_date_entered|date("d/m/Y") }}</td>
+					<td>{{ expense.expense_description|e }}</td>
+					<td>{{ expense.expense_amount|e }}</td>
+					<td>{{ expense.category.name|e }}</td>
+					<td class="text-center">
+						<a href="{{ urlFor('expenses-delete', {'id': expense.id}) }}" class="btn btn-danger btn-sm" title="borrar" onclick="return confirm('borrar gasto?');">delete</a>
+						<a href="{{ urlFor('expenses-edit', {'id': expense.id}) }}" class="btn btn-success btn-sm" title="">Editar</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+			</tbody>
+		</table>
+		     <center>{{ expenses.render|raw }}</center> 
+	</div>
+
+</div>
+{% endblock %}

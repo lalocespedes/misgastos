@@ -1,0 +1,25 @@
+{% extends 'templates/default.php' %}
+
+{% block title %} Admin example {% endblock %}
+
+{% block content %}
+
+<div class="col-md-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Categorias</h3>
+		</div>
+			<ul class="list-group">
+			    {% for category in categories %}
+			        <a href="{{ urlFor('category-edit', {"id": category.id}) }}" title="editar" class="list-group-item">{{ category.name|e }}<p class="list-group-item-text">... alguna descripcion de la categoria</p></a>
+			    {% endfor %}
+			</ul>	
+
+			<center>{{ categories.render|raw }}</center> 	
+	</div>
+</div>
+
+<h3>Agregar Categoria</h3>
+<a href="{{ urlFor('category-add')}}" title="" class="btn btn-success"><i class="fa fa-plus fa-2x"></i></a>
+
+{% endblock %}
